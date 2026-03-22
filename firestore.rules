@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: declarations
+    // Document ID: auto-generated
+    // Fields:
+    //   - uid: string (required) - The user ID of the person who said yes.
+    //   - timestamp: timestamp (required) - When the declaration was made.
+    //   - message: string (required) - The final love message displayed.
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidDeclaration(data) {
+      return data.keys().hasAll(['uid', 'timestamp', 'message']) &&
+             data.uid is string && data.uid == request.auth.uid &&
+             data.timestamp is timestamp &&
+             data.message is string && data.message.size() < 1000;
+    }
+
+    match /declarations/{declarationId} {
+      allow read: if isAuthenticated() && resource.data.uid == request.auth.uid;
+      allow create: if isAuthenticated() && isValidDeclaration(request.resource.data);
+      allow update, delete: if false; // Declarations are immutable
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}

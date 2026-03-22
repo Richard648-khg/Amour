@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "Declaration": {
+      "title": "Declaration",
+      "description": "A record of a successful 'Yes' response to the love test.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The user ID of the person who said yes."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the declaration was made."
+        },
+        "message": {
+          "type": "string",
+          "description": "The final love message displayed."
+        }
+      },
+      "required": ["uid", "timestamp", "message"]
+    }
+  },
+  "firestore": {
+    "/declarations": {
+      "schema": "Declaration",
+      "description": "Collection of love declarations."
+    }
+  }
+}

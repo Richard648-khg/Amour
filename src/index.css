@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&family=Montserrat:wght@300;400;600&family=Lato:wght@300;400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Playfair Display", serif;
+  --font-script: "Pinyon Script", cursive;
+  --font-sans: "Montserrat", sans-serif;
+  --font-body: "Lato", sans-serif;
+  
+  --color-rose-white: #FFF9F9;
+  --color-gold: #D4AF37;
+  --color-passion-red: #E63946;
+  --color-midnight: #1D3557;
+}
+
+@layer base {
+  body {
+    @apply bg-rose-white text-midnight font-body;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' style='font-size:20px'><text y='18'>❤️</text></svg>"), auto;
+  }
+  
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.heart-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
